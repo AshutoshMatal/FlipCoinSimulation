@@ -1,5 +1,106 @@
 #!/bin/bash -x
 echo " Welcome to  FilpCoin Simulation "
+function Single()
+{
+echo "Enter the fliping coin"
+read number
+declare -A Singlet 
+Head=0
+Tail=0
+temp=$number
+for ((count=1; count<=$number; count++ ))
+do
+randomvalue=$((RANDOM%2+1))
+case $randomvalue in
+			1)
+				H=$(($H+1))
+   		 	Singlet["H"]="$H"
+				;;
+			2)
+				T=$(($T+1))
+   			Singlet["T"]="$T"
+				;;
+esac
+done
+echo  " Singlet key and values result :${!Singlet[@]} :${Singlet[@]} "
+PercentOfHead=`echo "(($H/$temp * 100))" | bc -l`
+PercentOfTail=`echo "(($T/$temp * 100))" | bc -l`
+echo "Percentage of Head :$PercentOfHead"
+echo "Percentage of Tail :$PercentOfTail"
+for value in ${!Singlet[@]}
+do
+      echo "$value : ${Singlet[$value]}"
+done
+#  THIS FOR LOOP IS USED FOR SORTING 
+for i in ${!Singlet[@]}
+do
+	 echo " $i ${Singlet[$i]}"
+done | sort -k2 -rn 
+}
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+function double()
+{
+echo "Enter the fliping coin"
+read number
+# REMODIFIED PREVIOUS PROGRAM BY USING DICTIONARY
+declare -A Doublet
+#INITIALISING  THE VARIABLES  
+HH=0
+TT=0
+HT=0
+TH=0
+temp=$number
+#BY USING  FOR LOOP  WE CAN TAKE NUMBER OF LOOPING AS WE WANT
+for ((count=1; count<=$number; count++ ))
+do
+#RANDOM FUNCTION IS USE TO TOSS  AND STORED IN VARIABLE
+randomvalue=$((RANDOM%4+1))
+#SWITCH CASE IS USED  FOR THE POSSIBILITIES 
+case $randomvalue in
+			1)
+				HH=$(($HH+1))
+   		 	Doublet["HH"]="$HH"
+				;;
+			2)
+				TT=$(($TT+1))
+   			Doublet["TT"]="$TT"
+				;;
+			3)
+				HT=$(($HT+1))
+            Doublet["HT"]="$HT"
+            ;;
+			4)
+				TH=$(($TH+1))
+            Doublet["TH"]="$TH"
+            ;;
+
+esac
+done
+#PRINTING  KEY AND VALUES BY USING DICTONARY
+echo  " Doublet key and values result :${!Doublet[@]} :${Doublet[@]} "
+PercentOfHH=`echo "(($HH/$temp * 100))" | bc -l`
+PercentOfTT=`echo "(($TT/$temp * 100))" | bc -l`
+PercentOfHT=`echo "(($HT/$temp * 100))" | bc -l`
+PercentOfTH=`echo "(($TH/$temp * 100))" | bc -l`
+#FINDING THE PERCENTAGE OF ALL THE POSSIBLITIES
+echo "Percentage of Head Head : $PercentOfHH"
+echo "Percentage of Tail Tail : $PercentOfTT"
+echo "Percentage of Head Tail : $PercentOfHT"
+echo "Percentage of Tail Head : $PercentOfTH"
+for value in ${!Doublet[@]}
+do
+      echo "$value : ${Doublet[$value]}"
+done
+for i in "${!Doublet[@]}"
+do
+   echo "$i  ${Doublet[$i]}"
+done | sort -k2 -rn
+
+}
+
+echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+function Triple()
+{
 echo "Enter the fliping coin"
 read number
 # REMODIFIED PREVIOUS PROGRAM BY USING DICTIONARY
@@ -80,3 +181,24 @@ for value in ${!Triplet[@]}
 do
 		echo "$value : ${Triplet[$value]}"
 done
+for i in "${!Triplet[@]}"
+do
+   echo $i  "${Triplet["$i"]}"
+done | sort -k2 -rn 
+
+}
+echo "*********************************************************************************************************"
+echo "Enter the choice (1-2-3)"
+read random
+case $random in
+			1)
+				result="$(Single)"
+				;;
+			2)
+				result="$(double)"
+				;;
+			3)
+				result="$(Triple)"
+				;;
+esac
+
